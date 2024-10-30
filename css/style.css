@@ -1,0 +1,74 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center; 
+    align-items: center;       
+}
+
+#container {
+    background-color: #b0afaf;
+    padding: 20px;
+}
+
+
+/* Estilo para tablas */
+table {
+    border-collapse: collapse;
+}
+
+td {
+    width: 15px;
+    height: 15px;
+    font-size: 10px;
+    text-align: center;
+    background-color: #e3e3e3;
+    font-weight: bold;
+}
+
+.celda{
+    border-style: outset;
+    background-color: #d3d3d3;
+}
+
+[data-mina="0"] {
+    color: #e3e3e3;
+}
+
+[data-mina="1"] {
+    color: blue;
+}
+
+[data-mina="2"] {
+    color: green;
+}
+
+[data-mina="3"] {
+    color: red;
+}
+
+[data-mina="4"] {
+    color: purple;
+}
+
+[data-mina="5"] {
+    color: brown;
+}
+
+[data-mina="6"] {
+    color: cyan;
+}
+
+[data-mina="7"] {
+    color: black;
+}
+
+[data-mina="8"] {
+    color: gray;
+}
+
+
+.sin-clic {
+    pointer-events: none;
+}
