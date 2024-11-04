@@ -32,9 +32,6 @@ td {
     background-color: #d3d3d3;
 }
 
-[data-mina="0"] {
-    color: #e3e3e3;
-}
 
 [data-mina="1"] {
     color: blue;

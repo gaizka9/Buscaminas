@@ -74,12 +74,16 @@ function comprobar(g, nodeId) {
 
 
 
-function muerto(g) {
+function muerto(g, fin) {
     const tds = document.querySelectorAll('td');
 
     tds.forEach(td => {
         if(g.getMina(td.id)) {
             td.innerText = 'X';
+
+            if (fin) {
+                td.style.color = 'green'
+            }
         } 
 
         td.classList.add('sin-clic');
@@ -103,7 +107,7 @@ function despejar(g, vecinos) {
         
         miTd.classList.remove("celda");
         const minasAlrededor = comprobar(g, vecino);
-        miTd.innerText = minasAlrededor;
+        miTd.innerText = minasAlrededor == 0 ? "" : minasAlrededor;
         miTd.setAttribute('data-mina', minasAlrededor);
         
         
@@ -131,10 +135,10 @@ function asignarEventosCeldas() {
 
                 if (g.getMina(this.id)) {
                     this.innerText = 'X';
-                    muerto(g);
+                    muerto(g, false);
                 } else {
                     var m = comprobar(g, this.id);
-                    this.innerText = m;
+                    this.innerText = m == 0 ? "" : m;
                     this.setAttribute('data-mina', m);
 
                     if (m == 0) {
@@ -179,5 +183,7 @@ function ganar() {
 
     if (ganar === sweeper) {
         alert('¡Has ganado!');
+        muerto(g, true)
     }
+    
 }
