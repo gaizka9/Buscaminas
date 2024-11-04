@@ -1,85 +1,63 @@
 import { Grafo } from './grafo.js';
+import { crearTabla } from './campo.js';
 
-const g = new Grafo;
+let g = new Grafo;
+g = grafo(g);
 
-const row = 32
-const col = 32
+const minado = document.getElementById('minado');
+minado.appendChild(crearTabla());
 
-for (let i = 0; i < row; i++) {
-    for (let j = 0; j < col; j++) {
-        g.addNodo(`${i}-${j}`);
+function grafo(g){
+    const row = document.getElementById('row').value
+    const col = document.getElementById('col').value
+    const sweeper = document.getElementById('sweeper')
+    sweeper.max = row * col;
 
-        if (j != 0) {
-            g.addArista(`${i}-${j}`, `${i}-${j-1}`);
-        }
+    var minas = sweeper.value;
+    var ids = [];
 
-        if(i != 0) {
-            g.addArista(`${i}-${j}`, `${i-1}-${j}`);
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            g.addNodo(`${i}-${j}`);
+            ids.push(`${i}-${j}`);
 
             if (j != 0) {
-                g.addArista(`${i}-${j}`, `${i-1}-${j-1}`);
+                g.addArista(`${i}-${j}`, `${i}-${j-1}`);
             }
 
-            if (j != col-1) {
-                g.addArista(`${i}-${j}`, `${i-1}-${j+1}`);
+            if(i != 0) {
+                g.addArista(`${i}-${j}`, `${i-1}-${j}`);
+
+                if (j != 0) {
+                    g.addArista(`${i}-${j}`, `${i-1}-${j-1}`);
+                }
+
+                if (j != col-1) {
+                    g.addArista(`${i}-${j}`, `${i-1}-${j+1}`);
+                }
             }
         }
     }
+
+    meterMina(g, minas, ids);
+
+    return g;
 }
 
-const btn = document.querySelector('button');
-
-btn.addEventListener('click', function() {
-    location.reload();
+const restart = document.getElementById('restart');
+restart.addEventListener('click', function() {
+    
+    g = new Grafo;
+    g = grafo(g);
+    
+    minado.innerHTML = '';
+    const nuevaTabla = crearTabla(); 
+    minado.appendChild(nuevaTabla);
+    asignarEventosCeldas()
 });
 
 
-const tds = document.querySelectorAll('td');
-
-tds.forEach(td => {
-    td.addEventListener('click', function() {
-
-        if(!this.classList.contains('bandera')){
-
-            this.classList.remove("celda");
-
-            if(g.getMina(this.id)) {
-                this.innerText = 'X';
-                muerto(g);
-            }else{
-                var m = comprobar(g, this.id);
-                this.innerText = m;
-                this.setAttribute('data-mina', m);
-
-                if (m == 0) {
-                    var vecinos = g.getVecinos(this.id); 
-                    despejar(g, vecinos);
-
-                }
-            }
-
-        }        
-    });
-});
-
-
-tds.forEach(td => {
-    td.addEventListener('contextmenu', function(event) {
-        event.preventDefault(); 
-
-        if(this.classList.contains('celda')){
-            if(g.getBandera(this.id)){
-
-                g.setBandera(this.id);
-                td.classList.remove('bandera');
-            }else{
-                g.setBandera(this.id);
-                td.classList.add('bandera');
-            }
-        }
-    });
-});
-
+asignarEventosCeldas()
 
 
 function comprobar(g, nodeId) {
@@ -127,7 +105,7 @@ function despejar(g, vecinos) {
         const minasAlrededor = comprobar(g, vecino);
         miTd.innerText = minasAlrededor;
         miTd.setAttribute('data-mina', minasAlrededor);
-
+        
         
         if (minasAlrededor == 0) {
             const nuevosVecinos = g.getVecinos(vecino); 
@@ -141,3 +119,65 @@ function despejar(g, vecinos) {
 }
 
 
+function asignarEventosCeldas() {
+    var cont = document.getElementById('sweeper').value;
+
+    const tds = document.querySelectorAll('td');
+
+    tds.forEach(td => {
+        td.addEventListener('click', function() {
+            if (!this.classList.contains('bandera')) {
+                this.classList.remove("celda");
+
+                if (g.getMina(this.id)) {
+                    this.innerText = 'X';
+                    muerto(g);
+                } else {
+                    var m = comprobar(g, this.id);
+                    this.innerText = m;
+                    this.setAttribute('data-mina', m);
+
+                    if (m == 0) {
+                        var vecinos = g.getVecinos(this.id);
+                        despejar(g, vecinos, cont);
+                    }
+
+                    ganar()
+                }
+            }
+        });
+
+        td.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+
+            if (this.classList.contains('celda')) {
+                if (g.getBandera(this.id)) {
+                    g.setBandera(this.id);
+                    td.classList.remove('bandera');
+                } else {
+                    g.setBandera(this.id);
+                    td.classList.add('bandera');
+                }
+            }
+        });
+    });
+}
+
+function meterMina(g, minas, ids){
+    let n;
+     for (let i = 0; i < minas; i++) {
+
+        n = Math.floor(Math.random() * ids.length);
+        g.setMina(ids[n]);
+        ids.splice(n, 1);
+    }
+}
+
+function ganar() {
+    const ganar = document.querySelectorAll('.celda').length;
+    const sweeper = parseInt(document.getElementById('sweeper').value, 10);
+
+    if (ganar === sweeper) {
+        alert('¡Has ganado!');
+    }
+}

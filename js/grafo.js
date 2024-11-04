@@ -4,12 +4,7 @@ export class Grafo {
     }
 
     addNodo(id) {
-        if (!this.nodes[id]) {
-            const randomNum = Math.floor(Math.random() * 5) + 1;
-            const tieneMina = randomNum === 1; 
-
-            this.nodes[id] = { vecinos: [], mina: tieneMina, bandera: false }; 
-        }
+        this.nodes[id] = { vecinos: [], mina: false, bandera: false }; 
     }
 
     addArista(nodo1, nodo2) {
@@ -30,6 +25,10 @@ export class Grafo {
 
     getMina(nodeId) {
         return this.nodes[nodeId].mina; 
+    }
+
+    setMina(nodeId) {
+        this.nodes[nodeId].mina = true; 
     }
 
     getBandera(nodeId) {

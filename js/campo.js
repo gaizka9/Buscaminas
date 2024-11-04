@@ -1,13 +1,8 @@
-
-const container = document.getElementById('container');
-
-container.appendChild(crearTabla());
-
-function crearTabla() {
+export function crearTabla() {
     const tabla = document.createElement('table');
 
-    const row = 32
-    const col = 32
+    const row = document.getElementById('row').value
+    const col = document.getElementById('col').value
 
     for (let i = 0; i < row; i++) {
         const fila = document.createElement('tr');
@@ -22,4 +17,3 @@ function crearTabla() {
     }
     return tabla;
 }
-
