@@ -33,28 +33,52 @@ btn.addEventListener('click', function() {
     location.reload();
 });
 
+
 const tds = document.querySelectorAll('td');
 
 tds.forEach(td => {
     td.addEventListener('click', function() {
-        this.classList.remove("celda");
 
-        if(g.getMina(this.id)) {
-            this.innerText = 'X';
-            muerto(g);
-        }else{
-            var m = comprobar(g, this.id);
-            this.innerText = m;
-            this.setAttribute('data-mina', m);
+        if(!this.classList.contains('bandera')){
 
-            if (m == 0) {
-                limpiar(g, this.id);
+            this.classList.remove("celda");
+
+            if(g.getMina(this.id)) {
+                this.innerText = 'X';
+                muerto(g);
+            }else{
+                var m = comprobar(g, this.id);
+                this.innerText = m;
+                this.setAttribute('data-mina', m);
+
+                if (m == 0) {
+                    var vecinos = g.getVecinos(this.id); 
+                    despejar(g, vecinos);
+
+                }
             }
-        }
-        
+
+        }        
     });
 });
 
+
+tds.forEach(td => {
+    td.addEventListener('contextmenu', function(event) {
+        event.preventDefault(); 
+
+        if(this.classList.contains('celda')){
+            if(g.getBandera(this.id)){
+
+                g.setBandera(this.id);
+                td.classList.remove('bandera');
+            }else{
+                g.setBandera(this.id);
+                td.classList.add('bandera');
+            }
+        }
+    });
+});
 
 
 
@@ -70,6 +94,8 @@ function comprobar(g, nodeId) {
     return minas; 
 }
 
+
+
 function muerto(g) {
     const tds = document.querySelectorAll('td');
 
@@ -81,3 +107,37 @@ function muerto(g) {
         td.classList.add('sin-clic');
     });
 }
+
+
+
+function despejar(g, vecinos) {
+
+    vecinos = new Set(vecinos);
+
+    vecinos.forEach(vecino => {
+        const miTd = document.getElementById(vecino);
+
+        
+        if (!miTd.classList.contains("celda")) {
+            return; 
+        }
+
+        
+        miTd.classList.remove("celda");
+        const minasAlrededor = comprobar(g, vecino);
+        miTd.innerText = minasAlrededor;
+        miTd.setAttribute('data-mina', minasAlrededor);
+
+        
+        if (minasAlrededor == 0) {
+            const nuevosVecinos = g.getVecinos(vecino); 
+            nuevosVecinos.forEach(nuevoVecino => {
+                vecinos.add(nuevoVecino); 
+            });
+
+            despejar(g, nuevosVecinos);
+        }
+    });
+}
+
+

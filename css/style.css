@@ -72,3 +72,7 @@ td {
 .sin-clic {
     pointer-events: none;
 }
+
+.bandera {
+    background-color: red;
+}

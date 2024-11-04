@@ -8,7 +8,7 @@ export class Grafo {
             const randomNum = Math.floor(Math.random() * 5) + 1;
             const tieneMina = randomNum === 1; 
 
-            this.nodes[id] = { vecinos: [], mina: tieneMina }; 
+            this.nodes[id] = { vecinos: [], mina: tieneMina, bandera: false }; 
         }
     }
 
@@ -29,6 +29,14 @@ export class Grafo {
     }
 
     getMina(nodeId) {
-        return this.nodes[nodeId]?.mina; 
+        return this.nodes[nodeId].mina; 
+    }
+
+    getBandera(nodeId) {
+        return this.nodes[nodeId].bandera; 
+    }
+
+    setBandera(nodeId) {
+        this.nodes[nodeId].bandera = !this.nodes[nodeId].bandera; 
     }
 }
