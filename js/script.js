@@ -135,6 +135,7 @@ function asignarEventosCeldas() {
 
                 if (g.getMina(this.id)) {
                     this.innerText = 'X';
+                    this.style.backgroundColor = '#ff0000';
                     muerto(g, false);
                 } else {
                     var m = comprobar(g, this.id);
@@ -182,8 +183,6 @@ function ganar() {
     const sweeper = parseInt(document.getElementById('sweeper').value, 10);
 
     if (ganar === sweeper) {
-        alert('¡Has ganado!');
         muerto(g, true)
     }
-    
 }
