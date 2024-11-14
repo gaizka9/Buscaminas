@@ -79,13 +79,14 @@ function muerto(g, fin) {
 
     tds.forEach(td => {
         if(g.getMina(td.id)) {
-            td.innerText = 'X';
-
             if (fin) {
-                td.style.color = 'green'
+                td.classList.add('ok');
+            }else {
+
+            td.classList.add('mina');
             }
         } 
-
+        td.classList.remove('bandera');
         td.classList.add('sin-clic');
     });
 }
@@ -134,7 +135,7 @@ function asignarEventosCeldas() {
                 this.classList.remove("celda");
 
                 if (g.getMina(this.id)) {
-                    this.innerText = 'X';
+                    td.classList.add('mina');
                     this.style.backgroundColor = '#ff0000';
                     muerto(g, false);
                 } else {
