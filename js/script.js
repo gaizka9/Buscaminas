@@ -135,7 +135,7 @@ function asignarEventosCeldas() {
                 this.classList.remove("celda");
 
                 if (g.getMina(this.id)) {
-                    td.classList.add('mina');
+                    this.classList.add('mina');
                     this.style.backgroundColor = '#ff0000';
                     muerto(g, false);
                 } else {

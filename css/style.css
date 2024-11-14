@@ -72,21 +72,21 @@ td {
 
 .bandera {
     background-image: url('./../IMG/bandera.png');
-    background-size: 12px 12px; /* Establece el tamaño del fondo en 5x5 px */
-    background-repeat: no-repeat; /* Para que la imagen no se repita */
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
     background-position: center;
 }
 
 .mina {
     background-image: url('./../IMG/mina.png');
-    background-size: 12px 12px; /* Establece el tamaño del fondo en 5x5 px */
-    background-repeat: no-repeat; /* Para que la imagen no se repita */
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
     background-position: center;
 }
 
 .ok {
     background-image: url('./../IMG/OK.png');
-    background-size: 12px 12px; /* Establece el tamaño del fondo en 5x5 px */
-    background-repeat: no-repeat; /* Para que la imagen no se repita */
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
     background-position: center;
 }
