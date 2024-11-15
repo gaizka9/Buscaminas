@@ -9,10 +9,8 @@ const minado = document.getElementById('minado');
 minado.appendChild(crearTabla());
 
 const param = new URLSearchParams(window.location.search);
-if (param.has('rayosX')) {
-    const rayosX = param.get('rayosX');
-    chetos(rayosX, g);
-}
+// ?safeClick=active&rayosX=inactive&inmortal=inactive
+chetos(param, g);
 
 function grafo(g){
     const row = document.getElementById('row').value
@@ -62,10 +60,7 @@ restart.addEventListener('click', function() {
     minado.appendChild(nuevaTabla);
     asignarEventosCeldas()
 
-    if (param.has('rayosX')) {
-    const rayosX = param.get('rayosX');
-    chetos(rayosX, g);
-}
+    chetos(param, g);
 });
 
 
