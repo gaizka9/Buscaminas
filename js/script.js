@@ -1,11 +1,18 @@
 import { Grafo } from './grafo.js';
 import { crearTabla } from './campo.js';
+import { chetos } from './chetos.js';
 
 let g = new Grafo;
 g = grafo(g);
 
 const minado = document.getElementById('minado');
 minado.appendChild(crearTabla());
+
+const param = new URLSearchParams(window.location.search);
+if (param.has('rayosX')) {
+    const rayosX = param.get('rayosX');
+    chetos(rayosX, g);
+}
 
 function grafo(g){
     const row = document.getElementById('row').value
@@ -54,6 +61,11 @@ restart.addEventListener('click', function() {
     const nuevaTabla = crearTabla(); 
     minado.appendChild(nuevaTabla);
     asignarEventosCeldas()
+
+    if (param.has('rayosX')) {
+    const rayosX = param.get('rayosX');
+    chetos(rayosX, g);
+}
 });
 
 
@@ -82,7 +94,7 @@ function muerto(g, fin) {
             if (fin) {
                 td.classList.add('ok');
             }else {
-
+            td.classList.remove('ok');
             td.classList.add('mina');
             }
         } 
