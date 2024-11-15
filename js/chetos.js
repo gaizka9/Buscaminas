@@ -17,16 +17,12 @@ export function chetos(param, g) {
 
     if (param.get("safeClick") == "active") {
         const col = document.getElementById('col').value
+        const row = document.getElementById('col').value
         let safe = -1;
-        let x = -1;
-        let y = 0;
-
+        
         while (safe != 0 ) {
-            x++;
-            if(x == col){
-                y++;
-                x = 0;
-            } 
+            let x = Math.floor(Math.random() * row);
+            let y = Math.floor(Math.random() * col);
 
             var nodeId = y + '-' + x
             safe = comprobar(g, nodeId);
