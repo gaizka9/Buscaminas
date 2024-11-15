@@ -10,29 +10,39 @@ export function chetos(param, g) {
             if (param.get("inmortal") == "active") {
                 td.classList.add('sin-clic');
             }
-
-
         }
     });
 
     if (param.get("safeClick") == "active") {
         const col = document.getElementById('col').value
-        const row = document.getElementById('col').value
+        const row = document.getElementById('row').value
         let safe = -1;
-        
-        while (safe != 0 ) {
+        let celdas = new Set()
+
+        while (safe != 0) {
             let x = Math.floor(Math.random() * row);
             let y = Math.floor(Math.random() * col);
 
-            var nodeId = y + '-' + x
+            var nodeId = `${y}-${x}`;
             safe = comprobar(g, nodeId);
             if (g.getMina(nodeId)) {
-                safe = 9
+                safe = 9;
+            }
+
+            if (safe != 0) {
+                celdas.add(nodeId)
+            }
+
+            if (celdas.size === col*row) {
+                nodeId = null;
+                break;
             }
         }
 
-        const td = document.getElementById(nodeId);
-        td.style.backgroundColor = '#00ff00';
+        if (nodeId != null) {
+            const td = document.getElementById(nodeId);
+            td.style.backgroundColor = '#00ff00';
+        }
     }
 }
 

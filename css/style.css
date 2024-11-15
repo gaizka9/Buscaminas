@@ -12,6 +12,13 @@ html, body {
     padding: 20px;
 }
 
+span {
+    background-color: #fff;
+    padding-inline: 7px;
+    margin-left: 100px;
+    border-style: inset;
+}
+
 
 /* Estilo para tablas */
 table {

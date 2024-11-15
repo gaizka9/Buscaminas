@@ -1,6 +1,6 @@
-import { Grafo } from './grafo.js';
-import { crearTabla } from './campo.js';
-import { chetos } from './chetos.js';
+import { Grafo } from './export/grafo.js';
+import { crearTabla } from './export/campo.js';
+import { chetos } from './export/chetos.js';
 
 let g = new Grafo;
 g = grafo(g);
@@ -132,6 +132,11 @@ function despejar(g, vecinos) {
 
 
 function asignarEventosCeldas() {
+
+    var rest = document.getElementById('sweeper').value;
+    const span = document.querySelector('span')
+    span.innerText = rest;
+
     var cont = document.getElementById('sweeper').value;
 
     const tds = document.querySelectorAll('td');
@@ -167,9 +172,15 @@ function asignarEventosCeldas() {
                 if (g.getBandera(this.id)) {
                     g.setBandera(this.id);
                     td.classList.remove('bandera');
+
+                    rest++;
+                    span.innerText = rest;
                 } else {
                     g.setBandera(this.id);
                     td.classList.add('bandera');
+
+                    rest--;
+                    span.innerText = rest;
                 }
             }
         });
